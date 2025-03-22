@@ -88,13 +88,13 @@ fontawesome-directory/
 转换单个图标：
 
 ```bash
-fontawesome-convert convert arrow-right /path/to/fontawesome --style solid --size 512 --color "#FF0000"
+fa-convert convert arrow-right /path/to/fontawesome --style solid --size 512 --color "#FF0000"
 ```
 
 转换所有图标：
 
 ```bash
-fontawesome-convert convert-all /path/to/fontawesome --style solid --size 512
+fa-convert convert-all /path/to/fontawesome --style solid --size 512
 ```
 
 ### ⚙️ 选项
@@ -163,7 +163,7 @@ output/
 将一个图标转换为多种尺寸（最大 512px）：
 
 ```bash
-fontawesome-convert convert arrow-right /path/to/fontawesome
+fa-convert convert arrow-right /path/to/fontawesome
 ```
 </details>
 
@@ -173,7 +173,7 @@ fontawesome-convert convert arrow-right /path/to/fontawesome
 将所有"solid"样式的图标转换为蓝色 PNG：
 
 ```bash
-fontawesome-convert convert-all /path/to/fontawesome --style solid --color "#0000FF"
+fa-convert convert-all /path/to/fontawesome --style solid --color "#0000FF"
 ```
 </details>
 
@@ -183,7 +183,7 @@ fontawesome-convert convert-all /path/to/fontawesome --style solid --color "#000
 调整日志级别以获取详细信息：
 
 ```bash
-fontawesome-convert --log-level DEBUG convert arrow-right /path/to/fontawesome
+fa-convert --log-level DEBUG convert arrow-right /path/to/fontawesome
 ```
 </details>
 

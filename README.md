@@ -88,13 +88,13 @@ fontawesome-directory/
 Convert a single icon:
 
 ```bash
-fontawesome-convert convert arrow-right /path/to/fontawesome --style solid --size 512 --color "#FF0000"
+fa-convert convert arrow-right /path/to/fontawesome --style solid --size 512 --color "#FF0000"
 ```
 
 Convert all icons:
 
 ```bash
-fontawesome-convert convert-all /path/to/fontawesome --style solid --size 512
+fa-convert convert-all /path/to/fontawesome --style solid --size 512
 ```
 
 ### ⚙️ Options
@@ -163,7 +163,7 @@ output/
 Convert an icon to multiple sizes (maximum 512px):
 
 ```bash
-fontawesome-convert convert arrow-right /path/to/fontawesome
+fa-convert convert arrow-right /path/to/fontawesome
 ```
 </details>
 
@@ -173,7 +173,7 @@ fontawesome-convert convert arrow-right /path/to/fontawesome
 Convert all "solid" style icons to blue PNGs:
 
 ```bash
-fontawesome-convert convert-all /path/to/fontawesome --style solid --color "#0000FF"
+fa-convert convert-all /path/to/fontawesome --style solid --color "#0000FF"
 ```
 </details>
 
@@ -183,7 +183,7 @@ fontawesome-convert convert-all /path/to/fontawesome --style solid --color "#000
 Adjust log level for detailed information:
 
 ```bash
-fontawesome-convert --log-level DEBUG convert arrow-right /path/to/fontawesome
+fa-convert --log-level DEBUG convert arrow-right /path/to/fontawesome
 ```
 </details>
 

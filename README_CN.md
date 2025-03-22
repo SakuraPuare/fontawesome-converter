@@ -10,6 +10,8 @@
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 ![SVG](https://img.shields.io/badge/SVG-Supported-orange?style=flat-square&logo=svg)
 ![PNG](https://img.shields.io/badge/PNG-Generator-yellow?style=flat-square&logo=image)
+[![PyPI version](https://img.shields.io/pypi/v/fontawesome-converter.svg?style=flat-square&logo=pypi&logoColor=white)](https://pypi.org/project/fontawesome-converter/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/fontawesome-converter.svg?style=flat-square&logo=pypi&logoColor=white)](https://pypi.org/project/fontawesome-converter/)
 
 [English](README.md) | [中文](README_CN.md)
 
@@ -34,6 +36,14 @@ FontAwesome Converter 是一个 Python 工具，可以将 FontAwesome 图标转�
 - 📊 **日志控制**：可调节的日志级别，支持多种详细程度
 
 ## 🚀 安装
+
+### 从 PyPI 安装（推荐）
+
+```bash
+pip install fontawesome-converter
+```
+
+### 从源代码安装
 
 ```bash
 # 克隆仓库

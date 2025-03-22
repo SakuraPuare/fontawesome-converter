@@ -10,6 +10,8 @@
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 ![SVG](https://img.shields.io/badge/SVG-Supported-orange?style=flat-square&logo=svg)
 ![PNG](https://img.shields.io/badge/PNG-Generator-yellow?style=flat-square&logo=image)
+[![PyPI version](https://img.shields.io/pypi/v/fontawesome-converter.svg?style=flat-square&logo=pypi&logoColor=white)](https://pypi.org/project/fontawesome-converter/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/fontawesome-converter.svg?style=flat-square&logo=pypi&logoColor=white)](https://pypi.org/project/fontawesome-converter/)
 
 [English](README.md) | [中文](README_CN.md)
 
@@ -34,6 +36,14 @@ FontAwesome Converter is a Python tool that allows you to convert FontAwesome ic
 - 📊 **Logging Control**: Adjustable verbosity with multiple log levels
 
 ## 🚀 Installation
+
+### From PyPI (Recommended)
+
+```bash
+pip install fontawesome-converter
+```
+
+### From Source
 
 ```bash
 # Clone the repository

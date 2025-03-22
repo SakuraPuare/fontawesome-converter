@@ -63,7 +63,9 @@ class FontAwesomeConverter:
         size: Union[int, List[int]] = 512, 
         color: Optional[str] = None, 
         output_dir: str = "output",
-        organize_by_size: bool = True
+        organize_by_size: bool = True,
+        organize_by_color: bool = True,
+        organize_by_style: bool = True
     ) -> List[str]:
         """
         Convert an SVG icon to PNG using direct SVG rendering.
@@ -75,6 +77,8 @@ class FontAwesomeConverter:
             color: Color for the icon (as hex code)
             output_dir: Directory to save the output
             organize_by_size: Whether to organize output files by size in subdirectories
+            organize_by_color: Whether to organize output files by color in subdirectories
+            organize_by_style: Whether to organize output files by style (solid/regular/brands) in subdirectories
             
         Returns:
             List of paths to the generated PNG files
@@ -109,21 +113,43 @@ class FontAwesomeConverter:
         # Log icon processing at INFO level
         logger.info(f"Converting '{icon_name}' ({style}) to PNG using SVG rendering")
         
+        # Normalize color for directory name if needed
+        color_dirname = "default" if not color else color.replace("#", "")
+        
         # Convert SVG file to PNG at each requested size
         for current_size in sizes_to_generate:
-            # Create size-specific output directory if organizing by size
+            # Determine the output directory based on organization options
+            current_output_dir = output_dir
+            
+            # Organization order: style -> color -> size
+            # Organize by style if requested
+            if organize_by_style:
+                style_dir = current_output_dir / style
+                style_dir.mkdir(parents=True, exist_ok=True)
+                current_output_dir = style_dir
+                
+            # Organize by color if requested
+            if organize_by_color:
+                color_dir = current_output_dir / color_dirname
+                color_dir.mkdir(parents=True, exist_ok=True)
+                current_output_dir = color_dir
+                
+            # Organize by size if requested
             if organize_by_size:
-                size_dir = output_dir / f"{current_size}px"
+                size_dir = current_output_dir / f"{current_size}px"
                 size_dir.mkdir(parents=True, exist_ok=True)
                 current_output_dir = size_dir
-            else:
-                current_output_dir = output_dir
                 
             # Generate output file path
-            if organize_by_size:
-                output_file = current_output_dir / f"{icon_name}_{style}.png"
-            else:
-                output_file = current_output_dir / f"{icon_name}_{style}_{current_size}.png"
+            filename_parts = [icon_name]
+            if not organize_by_style:
+                filename_parts.append(style)
+            if not organize_by_size:
+                filename_parts.append(f"{current_size}")
+            if not organize_by_color and color:
+                filename_parts.append(color_dirname)
+            
+            output_file = current_output_dir / f"{'_'.join(filename_parts)}.png"
             
             # Convert SVG to PNG
             if color:
@@ -164,7 +190,9 @@ class FontAwesomeConverter:
         size: Union[int, List[int]] = 512, 
         color: str = "#000000", 
         output_dir: str = "output",
-        organize_by_size: bool = True
+        organize_by_size: bool = True,
+        organize_by_color: bool = True,
+        organize_by_style: bool = True
     ) -> List[str]:
         """
         Convert an icon to PNG using font rendering.
@@ -176,6 +204,8 @@ class FontAwesomeConverter:
             color: Color for the icon (as hex code)
             output_dir: Directory to save the output
             organize_by_size: Whether to organize output files by size in subdirectories
+            organize_by_color: Whether to organize output files by color in subdirectories
+            organize_by_style: Whether to organize output files by style (solid/regular/brands) in subdirectories
             
         Returns:
             List of paths to the generated PNG files
@@ -225,16 +255,44 @@ class FontAwesomeConverter:
         # Log icon processing at INFO level
         logger.info(f"Converting '{icon_name}' ({style}) to PNG using font rendering")
         
+        # Normalize color for directory name
+        color_dirname = color.replace("#", "")
+        
         # Create images of each requested size
         for current_size in sizes_to_generate:
             try:
-                # Create size-specific output directory if organizing by size
+                # Determine the output directory based on organization options
+                current_output_dir = output_dir
+                
+                # Organization order: style -> color -> size
+                # Organize by style if requested
+                if organize_by_style:
+                    style_dir = current_output_dir / style
+                    style_dir.mkdir(parents=True, exist_ok=True)
+                    current_output_dir = style_dir
+                    
+                # Organize by color if requested
+                if organize_by_color:
+                    color_dir = current_output_dir / color_dirname
+                    color_dir.mkdir(parents=True, exist_ok=True)
+                    current_output_dir = color_dir
+                    
+                # Organize by size if requested
                 if organize_by_size:
-                    size_dir = output_dir / f"{current_size}px"
+                    size_dir = current_output_dir / f"{current_size}px"
                     size_dir.mkdir(parents=True, exist_ok=True)
                     current_output_dir = size_dir
-                else:
-                    current_output_dir = output_dir
+                    
+                # Generate output file name
+                filename_parts = [icon_name]
+                if not organize_by_style:
+                    filename_parts.append(style)
+                if not organize_by_size:
+                    filename_parts.append(f"{current_size}")
+                if not organize_by_color:
+                    filename_parts.append(color_dirname)
+                
+                output_file = current_output_dir / f"{'_'.join(filename_parts)}.png"
                 
                 # Create image with transparent background
                 img = Image.new("RGBA", (current_size, current_size), (0, 0, 0, 0))
@@ -254,12 +312,6 @@ class FontAwesomeConverter:
                 
                 # Draw icon
                 draw.text((x, y), unicode_char, font=font, fill=color)
-                
-                # Generate output file path 
-                if organize_by_size:
-                    output_file = current_output_dir / f"{icon_name}_{style}.png"
-                else:
-                    output_file = current_output_dir / f"{icon_name}_{style}_{current_size}.png"
                 
                 # Save the image
                 img.save(output_file)
@@ -296,70 +348,88 @@ class FontAwesomeConverter:
         color: Optional[str] = None,
         render_method: Literal["svg", "font"] = "svg",
         output_dir: str = "output",
-        organize_by_size: bool = True
+        organize_by_size: bool = True,
+        organize_by_color: bool = True,
+        organize_by_style: bool = True
     ) -> List[str]:
         """
-        Convert all available icons or icons of a specific style.
+        Convert all FontAwesome icons to PNG.
         
         Args:
-            style: Optional style filter (solid, regular, or brands)
-            size: Output size in pixels or list of sizes (max size if single value)
+            style: Filter by icon style (solid, regular, or brands). If None, all styles will be used.
+            size: Output size in pixels or list of sizes
             color: Color for the icon (as hex code)
             render_method: Method to use for rendering (svg or font)
-            output_dir: Directory to save outputs
+            output_dir: Directory to save the output
             organize_by_size: Whether to organize output files by size in subdirectories
+            organize_by_color: Whether to organize output files by color in subdirectories
+            organize_by_style: Whether to organize output files by style in subdirectories
             
         Returns:
-            List of generated PNG files
+            List of paths to the generated PNG files
         """
         output_files = []
+        icons_processed = 0
         
-        # Filter icons by style if specified
-        icons_to_convert = []
-        for icon_name, icon_data in self.icons_data.items():
-            if style is None or style in icon_data.get("styles", []):
-                icons_to_convert.append((icon_name, icon_data))
+        # Create output directory if it doesn't exist
+        output_dir = Path(output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Get a list of all icons to process
+        total_icons = len(self.icons_data)
+        logger.info(f"Processing {total_icons} icons...")
+        
+        # Create progress bar
+        with tqdm(total=total_icons, desc="Converting icons") as pbar:
+            # Process each icon
+            for icon_name, icon_info in self.icons_data.items():
+                styles_to_process = []
                 
-        # Get sizes for logging
-        sizes_to_generate = self._get_sizes_to_generate(size)
-        size_str = ", ".join(map(str, sizes_to_generate))
-        
-        # Log conversion info with organization method
-        organization_method = "organized by size in subfolders" if organize_by_size else "all in the same folder"
-        logger.info(f"Converting {len(icons_to_convert)} icons using {render_method} rendering at sizes: {size_str}px ({organization_method})")
-        
-        # Convert all matching icons with progress bar
-        for icon_name, icon_data in tqdm(icons_to_convert, desc="Converting icons", smoothing=0.1):
-            # Determine which styles to render for this icon
-            styles_to_render = [style] if style else icon_data.get("styles", [])
-            
-            for icon_style in styles_to_render:
-                if render_method == "svg":
-                    new_files = self.convert_svg(
-                        icon_name, 
-                        style=icon_style, 
-                        size=size, 
-                        color=color, 
-                        output_dir=output_dir,
-                        organize_by_size=organize_by_size
-                    )
+                # If a specific style is requested, only process that style
+                if style is not None:
+                    if style in icon_info.get("styles", []):
+                        styles_to_process = [style]
                 else:
-                    new_files = self.convert_font(
-                        icon_name, 
-                        style=icon_style, 
-                        size=size, 
-                        color=color or "#000000", 
-                        output_dir=output_dir,
-                        organize_by_size=organize_by_size
-                    )
+                    # Otherwise, process all available styles for the icon
+                    styles_to_process = icon_info.get("styles", [])
                     
-                output_files.extend(new_files)
-        
-        # Log size-specific counts if organized by size
-        if organize_by_size:
-            for current_size in sizes_to_generate:
-                size_files = [f for f in output_files if f"{current_size}px" in f]
-                logger.info(f"Size {current_size}px: {len(size_files)} icons")
+                # Process each style for the icon
+                for current_style in styles_to_process:
+                    # Choose the appropriate method for rendering
+                    try:
+                        if render_method == "svg":
+                            files = self.convert_svg(
+                                icon_name, 
+                                style=current_style,
+                                size=size,
+                                color=color,
+                                output_dir=output_dir,
+                                organize_by_size=organize_by_size,
+                                organize_by_color=organize_by_color,
+                                organize_by_style=organize_by_style
+                            )
+                        else:
+                            files = self.convert_font(
+                                icon_name,
+                                style=current_style,
+                                size=size,
+                                color=color or "#000000",
+                                output_dir=output_dir,
+                                organize_by_size=organize_by_size,
+                                organize_by_color=organize_by_color,
+                                organize_by_style=organize_by_style
+                            )
+                        
+                        output_files.extend(files)
+                    except Exception as e:
+                        logger.error(f"Error processing '{icon_name}' ({current_style}): {str(e)}")
+                        
+                icons_processed += 1
+                pbar.update(1)
+                
+                # Log progress at INFO level
+                if icons_processed % 100 == 0:
+                    logger.info(f"Processed {icons_processed}/{total_icons} icons")
                     
-        logger.success(f"Successfully converted {len(output_files)} icons in {len(sizes_to_generate)} different sizes")
+        logger.info(f"Completed converting {icons_processed} icons to PNG, created {len(output_files)} files")
         return output_files 

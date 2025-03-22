@@ -16,7 +16,7 @@
 </div>
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/5456665/68766590-d6c05800-064a-11ea-8b65-a13abbc48dad.png" alt="FontAwesome Icons" width="600" />
+  <img src="https://img.fortawesome.com/349cfdf6/fa-free-logo.svg" alt="FontAwesome Icons" width="600" />
 </p>
 
 ## 📋 Overview

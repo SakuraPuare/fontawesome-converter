@@ -1,6 +1,6 @@
-cairosvg==2.7.1
-click==8.1.8
+cairosvg==2.9.0
+click==8.3.3
 loguru==0.7.3
-Pillow==12.1.1
-setuptools==78.1.1
-tqdm==4.67.1
+Pillow==12.2.0
+setuptools==82.0.1
+tqdm==4.67.3

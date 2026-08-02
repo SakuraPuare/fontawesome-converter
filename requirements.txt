@@ -2,5 +2,5 @@ cairosvg==2.9.0
 click==8.4.2
 loguru==0.7.3
 Pillow==12.3.0
-setuptools==82.0.1
+setuptools==83.0.0
 tqdm==4.70.0

@@ -1,5 +1,5 @@
 cairosvg==2.9.0
-click==8.4.2
+click==8.5.0
 loguru==0.7.3
 Pillow==12.3.0
 setuptools==84.0.0

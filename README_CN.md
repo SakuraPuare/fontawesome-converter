@@ -6,7 +6,7 @@
 
 **将 FontAwesome 图标转换为 PNG 格式**
 
-![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square&logo=python)
+![Python](https://img.shields.io/badge/Python-3.11+-blue?style=flat-square&logo=python)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 ![SVG](https://img.shields.io/badge/SVG-Supported-orange?style=flat-square&logo=svg)
 ![PNG](https://img.shields.io/badge/PNG-Generator-yellow?style=flat-square&logo=image)
@@ -189,7 +189,7 @@ fa-convert --log-level DEBUG convert arrow-right /path/to/fontawesome
 
 ## 🔧 要求
 
-- Python 3.10+
+- Python 3.11+
 - FontAwesome 文件（可以从 [FontAwesome](https://fontawesome.com/download) 下载）
 - 依赖项：
   - cairosvg - 用于 SVG 渲染

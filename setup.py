@@ -12,7 +12,7 @@ setup(
         "loguru>=0.6.0",
         "tqdm>=4.60.0",
         "cairosvg>=2.5.0",
-        "Pillow>=9.0.0",
+        "Pillow>=13",
     ],
     entry_points={
         "console_scripts": [
@@ -30,5 +30,5 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.10",
+    python_requires=">=3.11",
 ) 
